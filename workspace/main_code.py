@@ -1,5 +1,3 @@
-from reco.recommender import SVDRecommender
-from reco.datasets import load_movielens
 import numpy as np
 import pandas as pd
 from metrics import rmse
@@ -8,8 +6,7 @@ from kpod import kpod
 from methods import create_utility_matrix
 
 
-#data = load_movielens()
-data = pd.read_csv("../reco/datasets/movielens1m.csv")
+data = pd.read_csv("../datasets/movielens1m.csv")
 #print data
 
 data['userId'] = data['userId'].astype('string')
@@ -31,8 +28,7 @@ for i in range(5):
     train = pd.concat(train_ids).reset_index()
     test = sets[i].reset_index()
 
-    SVD = SVDRecommender(no_of_features=4)
-    user_item_matrix = SVD.create_utility_matrix(train, formatizer={'user':'userId', 'item':'movieId', 'value':'rating'})
+    user_item_matrix = create_utility_matrix(train, formatizer={'user':'userId', 'item':'movieId', 'value':'rating'})
 
     users = list(user_item_matrix.index)
     items = list(user_item_matrix.columns)
